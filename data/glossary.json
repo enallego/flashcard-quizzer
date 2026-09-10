@@ -1,0 +1,17 @@
+[
+  {"front": "CPU", "back": "Central Processing Unit"},
+  {"front": "RAM", "back": "Random Access Memory"},
+  {"front": "SSD", "back": "Solid State Drive"},
+  {"front": "API", "back": "Application Programming Interface"},
+  {"front": "DNS", "back": "Domain Name System"},
+  {"front": "HTTP", "back": "HyperText Transfer Protocol"},
+  {"front": "SSH", "back": "Secure Shell"},
+  {"front": "VPN", "back": "Virtual Private Network"},
+  {"front": "CDN", "back": "Content Delivery Network"},
+  {"front": "SQL", "back": "Structured Query Language"},
+  {"front": "CLI", "back": "Command Line Interface"},
+  {"front": "IDE", "back": "Integrated Development Environment"},
+  {"front": "ORM", "back": "Object Relational Mapper"},
+  {"front": "JWT", "back": "JSON Web Token"},
+  {"front": "TLS", "back": "Transport Layer Security"}
+]
