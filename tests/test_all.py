@@ -15,7 +15,7 @@ from quiz_engine import QuizEngine, SessionResult
 from strategies import AdaptiveStrategy, RandomStrategy, SequentialStrategy
 from ui import ask_play_again, print_banner, print_summary
 
-# ── Fixtures ──────────────────────────────────────────────────────────────────
+# -- Fixtures --
 
 
 @pytest.fixture
@@ -39,7 +39,7 @@ def json_file(tmp_path):
     return str(p)
 
 
-# ── Model Tests ───────────────────────────────────────────────────────────────
+# -- Model Tests --
 
 
 class TestFlashcard:
@@ -80,7 +80,7 @@ class TestFlashcard:
             Flashcard(front="Q", back="   ")
 
 
-# ── Data Loader Tests ─────────────────────────────────────────────────────────
+# -- Data Loader Tests --
 
 
 class TestDataLoader:
@@ -131,7 +131,7 @@ class TestDataLoader:
             load_flashcards(str(p))
 
 
-# ── Strategy Tests ────────────────────────────────────────────────────────────
+# -- Strategy Tests --
 
 
 class TestSequentialStrategy:
@@ -181,7 +181,7 @@ class TestAdaptiveStrategy:
         assert [c.front for c in sample_cards] == original_order
 
 
-# ── Quiz Engine Tests ─────────────────────────────────────────────────────────
+# -- Quiz Engine Tests --
 
 
 class TestSessionResult:
@@ -227,7 +227,9 @@ class TestQuizEngine:
         assert result.correct == 3
 
     def test_marks_wrong_on_miss(self, sample_cards):
-        engine = QuizEngine(cards=[sample_cards[0]], strategy=SequentialStrategy())
+        engine = QuizEngine(
+            cards=[sample_cards[0]], strategy=SequentialStrategy()
+        )
         with patch("builtins.input", return_value="wrong"):
             engine.run()
         assert sample_cards[0].times_wrong == 1
@@ -246,7 +248,7 @@ class TestQuizEngine:
         assert result.missed_cards[0].front == "RAM"
 
 
-# ── UI Tests ──────────────────────────────────────────────────────────────────
+# -- UI Tests --
 
 
 class TestUI:
@@ -284,7 +286,7 @@ class TestUI:
             assert ask_play_again() is True
 
 
-# ── CLI Tests ─────────────────────────────────────────────────────────────────
+# -- CLI Tests --
 
 
 class TestCLI:
@@ -301,7 +303,9 @@ class TestCLI:
         with pytest.raises(SystemExit):
             from main import parse_args
 
-            with patch("sys.argv", ["main.py", "--file", "data/glossary.json"]):
+            with patch(
+                "sys.argv", ["main.py", "--file", "data/glossary.json"]
+            ):
                 parse_args()
 
     def test_missing_file_exits(self):
@@ -317,6 +321,12 @@ class TestCLI:
 
             with patch(
                 "sys.argv",
-                ["main.py", "--mode", "invalid", "--file", "data/glossary.json"],
+                [
+                    "main.py",
+                    "--mode",
+                    "invalid",
+                    "--file",
+                    "data/glossary.json",
+                ],
             ):
                 parse_args()

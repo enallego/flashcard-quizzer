@@ -20,7 +20,9 @@ def parse_args() -> argparse.Namespace:
     """Parse and return CLI arguments."""
     parser = argparse.ArgumentParser(
         prog="flashcard-quizzer",
-        description="A CLI flashcard quiz application with multiple quiz modes.",
+        description=(
+            "A CLI flashcard quiz application with multiple quiz modes."
+        ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Quiz Modes:

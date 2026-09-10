@@ -1,6 +1,7 @@
 """Handles loading and validating flashcard data from JSON files."""
 
 import sys
+from pathlib import Path
 from typing import List
 
 from models import Flashcard
@@ -11,8 +12,6 @@ def load_flashcards(filepath: str) -> List[Flashcard]:
     """
     Load flashcards from a JSON file using FileHandler.
 
-    The JSON file must be a list of objects, each with 'front' and 'back' keys.
-
     Args:
         filepath: Path to the JSON file.
 
@@ -22,15 +21,22 @@ def load_flashcards(filepath: str) -> List[Flashcard]:
     Raises:
         SystemExit: If the file is missing, malformed, or invalid.
     """
+    path = Path(filepath)
+    if not path.is_absolute():
+        base_dir = Path(__file__).resolve().parent
+        candidate = base_dir / filepath
+        if candidate.exists():
+            path = candidate
+
     handler = FileHandler()
 
-    if not handler.file_exists(filepath):
+    if not path.exists():
         print(f"Error: File not found — '{filepath}'")
         print("Please provide a valid path to a JSON flashcard file.")
         sys.exit(1)
 
     try:
-        data = handler.load_data(filepath)
+        data = handler.load_data(str(path))
     except RuntimeError as e:
         print(f"Error: Could not load '{filepath}'.")
         print(f"Details: {e}")
@@ -52,7 +58,8 @@ def load_flashcards(filepath: str) -> List[Flashcard]:
             sys.exit(1)
         if "front" not in item or "back" not in item:
             print(
-                f"Error: Item at index {i} is missing 'front' or 'back' key."
+                f"Error: Item at index {i} is missing"
+                " 'front' or 'back' key."
             )
             sys.exit(1)
         try:
